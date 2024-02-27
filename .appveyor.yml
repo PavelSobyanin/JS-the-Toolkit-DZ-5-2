@@ -1,8 +1,8 @@
 image: Ubuntu1804
-stack: node 16
+stack: node 20
 branches:
   only: 
-    - master
+    - main
 cache: node_modules
 install:
   - npm install
