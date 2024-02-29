@@ -1,4 +1,4 @@
-import Character from '../character';
+import Character from '../character.js';
 
 test('Must correctly create an object of the base class', () => {
   const expected = {
