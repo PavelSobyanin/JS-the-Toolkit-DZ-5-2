@@ -1,60 +1,24 @@
-import Character from '../character.js';
+import Character from '../character';
 
-test('New character with invalid name (too short)', () => {
-    expect(
-        () => new Character('O', 'Bowman', 100, 100),
-    ).toThrow('Invalid name length');
+test('Must correctly create an object of the base class', () => {
+  const expected = {
+    name: 'Test',
+    type: 'Bowman',
+    health: 100,
+    level: 1,
+  };
+  expect(new Character('Test', 'Bowman')).toEqual(expected);
 });
 
-test('New character with invalid name (too long)', () => {
-    expect(
-        () => new Character('LooooooongName', 'Daemon', 100, 100),
-    ).toThrow('Invalid name length');
+test('if name is not a string should throw an error', () => {
+  expect(() => new Character(1, 'Bowman')).toThrowError('The name must be a string');
 });
 
-test('New character with invalid character type', () => {
-    expect(
-        () => new Character('Bowy', 'FakeBowman', 100, 100),
-    ).toThrow('Invalid character type');
+test('if the name is not between 2 and 10 characters should throw error', () => {
+  expect(() => new Character('T', 'Bowman')).toThrowError('The name must be between 2 and 10 characters!');
+  expect(() => new Character('abracadabra')).toThrowError('The name must be between 2 and 10 characters!');
 });
 
-test('Inflict damage to character', () => {
-    const testChar = new Character('Bowy', 'Bowman', 25, 25);
-    testChar.damage(50);
-    expect(testChar).toEqual({
-        name: 'Bowy',
-        type: 'Bowman',
-        health: 62.5,
-        level: 1,
-        attack: 25,
-        defence: 25,
-    });
-});
-
-test('The value of health cannot be negative', () => {
-    const testChar = new Character('Bowy', 'Bowman', 25, 25);
-    testChar.health = 0;
-    testChar.damage(50);
-    expect(testChar.health).toEqual(0);
-});
-
-test('Go to the next level', () => {
-    const testChar = new Character('Bowy', 'Bowman', 25, 25);
-    testChar.levelUp();
-    expect(testChar).toEqual({
-        name: 'Bowy',
-        type: 'Bowman',
-        health: 100,
-        level: 2,
-        attack: 30,
-        defence: 30,
-    });
-});
-
-test('Go to the next level with zero health', () => {
-    const testChar = new Character('Bowy', 'Bowman', 25, 25);
-    testChar.health = 0;
-    expect(() => testChar.levelUp()).toThrow(
-        'You cannot raise the level with zero health',
-    );
+test('if the character is not on the list, throws an error', () => {
+  expect(() => new Character('abracad')).toThrowError('The type must be selected from the list of suggested types!');
 });
